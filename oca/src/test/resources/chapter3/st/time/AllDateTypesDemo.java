@@ -1,7 +1,5 @@
 package st.time;
 
-import java.time.*;
-
 /**
  * <br/>javac "./st/time/AllDateTypesDemo.java"
  * <br/>java -ea st.time.AllDateTypesDemo
