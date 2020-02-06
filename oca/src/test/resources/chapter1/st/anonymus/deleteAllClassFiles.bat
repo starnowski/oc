@@ -1,0 +1,1 @@
+del ".\st\anonymus\*.class"
