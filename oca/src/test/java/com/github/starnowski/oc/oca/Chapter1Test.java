@@ -7,12 +7,12 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.concurrent.TimeUnit;
 
 import static com.github.starnowski.oc.oca.TestUtils.returnFileForCopiedTestDirectory;
 import static java.io.File.separator;
 import static java.lang.System.getenv;
 import static java.lang.System.out;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -34,7 +34,7 @@ public class Chapter1Test {
         builder.directory( destDir.toPath().toFile().getAbsoluteFile() ); // this is where you set the root folder for the executable to run with
         builder.redirectErrorStream(true);
         Process process =  builder.start();
-        process.waitFor(10, TimeUnit.SECONDS);
+        process.waitFor(10, SECONDS);
 
         // then
         String result = TestUtils.returnProcessOutputAsString(process);
