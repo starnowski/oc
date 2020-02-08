@@ -59,4 +59,24 @@ public class Chapter1Test {
                 () -> assertTrue("The file with extension 'class' for type DataClassNameWithoutConflict should exists", destDir.toPath().resolve("DataClassNameWithoutConflict.class").toFile().exists())
         );
     }
+
+    @Test
+    @DisplayName("the 'PackageDependecieFailedTest.java' class should be to not compile because the 'ProgramBB' type is in subpackage'")
+    public void testPackageDependecieFailedTestShouldNotCompileBecauseProgramBBTypeIsInSubPackage() throws IOException, InterruptedException {
+        // given
+        File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
+
+        // when
+        ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir, "PackageDependecieFailedTest.java");
+        process.getProcess().waitFor(10, SECONDS);
+
+        // then
+        ProcessDisplayedContent result = returnProcessDisplayedContent(process);
+        out.println(result);
+        assertAll(
+                () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac PackageDependecieFailedTest.java")),
+                () -> assertTrue("Comment about invalid line should be displayed", result.getOutput().contains("PackageDependecieFailedTest.java:7: error: cannot find symbol")),
+                () -> assertTrue("Comment about error should be displayed", result.getOutput().contains("1 error"))
+        );
+    }
 }
