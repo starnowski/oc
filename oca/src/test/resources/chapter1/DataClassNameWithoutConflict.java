@@ -7,5 +7,5 @@ import java.sql.Date;
 */
 public class DataClassNameWithoutConflict {
 	
-	private Date date; //This line should generate complication error.
+	private Date date;
 }
