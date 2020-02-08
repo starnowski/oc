@@ -41,12 +41,17 @@ public class TestUtils {
         return destDir;
     }
 
-    public static Process startJavacProcessWithArgumentsFromDirectory(File dir, String... arguments) throws IOException {
+    public static ProcessWrapper startJavacProcessWithArgumentsFromDirectory(File dir, String... arguments) throws IOException {
         String javaHome = getenv("JAVA_HOME");
         String javacPath = javaHome + separator + "bin" + separator + "javac";
         ProcessBuilder builder = new ProcessBuilder( concat(of(javacPath), of(arguments)).toArray(String[]::new));
         builder.directory( dir.toPath().toFile().getAbsoluteFile() ); // this is where you set the root folder for the executable to run with
         builder.redirectErrorStream(true);
-        return builder.start();
+        //builder.command();
+        return new ProcessWrapper(builder.start(), builder.command());
+    }
+
+    public static ProcessDisplayedContent returnProcessDisplayedContent(ProcessWrapper process) throws IOException {
+        return new ProcessDisplayedContent(String.join(" ", process.getCommand()), returnProcessOutputAsString(process.getProcess()));
     }
 }

@@ -27,15 +27,16 @@ public class Chapter1Test {
         File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
 
         // when
-        Process process =  startJavacProcessWithArgumentsFromDirectory(destDir, "DataClassNameConflict.java");
-        process.waitFor(10, SECONDS);
+        ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir, "DataClassNameConflict.java");
+        process.getProcess().waitFor(10, SECONDS);
 
         // then
-        String result = returnProcessOutputAsString(process);
+        ProcessDisplayedContent result = returnProcessDisplayedContent(process);
         out.println(result);
         assertAll(
-                () -> assertTrue("Comment about invalid line should be displayed", result.contains("DataClassNameConflict.java:8: error: cannot find symbol")),
-                () -> assertTrue("Comment about error should be displayed", result.contains("1 error"))
+                () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac DataClassNameConflict.java")),
+                () -> assertTrue("Comment about invalid line should be displayed", result.getOutput().contains("DataClassNameConflict.java:8: error: cannot find symbol")),
+                () -> assertTrue("Comment about error should be displayed", result.getOutput().contains("1 error"))
         );
     }
 
@@ -47,12 +48,15 @@ public class Chapter1Test {
         assertFalse("The file with extension 'class' for type DataClassNameWithoutConflict should not exists", destDir.toPath().resolve("DataClassNameWithoutConflict.class").toFile().exists());
 
         // when
-        Process process =  startJavacProcessWithArgumentsFromDirectory(destDir, "DataClassNameWithoutConflict.java");
-        process.waitFor(10, SECONDS);
+        ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir, "DataClassNameWithoutConflict.java");
+        process.getProcess().waitFor(10, SECONDS);
 
         // then
-        String result = returnProcessOutputAsString(process);
+        ProcessDisplayedContent result = returnProcessDisplayedContent(process);
         out.println(result);
-        assertTrue("The file with extension 'class' for type DataClassNameWithoutConflict should exists", destDir.toPath().resolve("DataClassNameWithoutConflict.class").toFile().exists());
+        assertAll(
+                () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac DataClassNameWithoutConflict.java")),
+                () -> assertTrue("The file with extension 'class' for type DataClassNameWithoutConflict should exists", destDir.toPath().resolve("DataClassNameWithoutConflict.class").toFile().exists())
+        );
     }
 }
