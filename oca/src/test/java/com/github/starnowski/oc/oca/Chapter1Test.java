@@ -1,13 +1,14 @@
 package com.github.starnowski.oc.oca;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
+import static com.github.starnowski.oc.oca.TestUtils.copyDirectory;
 import static java.io.File.separator;
 import static java.lang.System.getenv;
 import static java.lang.System.out;
@@ -25,12 +26,7 @@ public class Chapter1Test {
         ClassLoader classLoader = getClass().getClassLoader();
         File srcDir = new File(classLoader.getResource("chapter1").getFile());
         File destDir = tempDir.resolve("chapter1").toFile();
-        FileUtils.copyDirectory(srcDir, destDir, new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                return !pathname.getAbsolutePath().endsWith(".class");
-            }
-        });
+        copyDirectory(srcDir, destDir);
 
         // when
         String javaHome = getenv("JAVA_HOME");
@@ -42,14 +38,7 @@ public class Chapter1Test {
         process.waitFor(10, TimeUnit.SECONDS);
 
         // then
-        BufferedReader reader =
-                new BufferedReader(new InputStreamReader(process.getInputStream()));
-        StringBuilder stringBuilder = new StringBuilder();
-        String line;
-        while ( (line = reader.readLine()) != null) {
-            stringBuilder.append(String.format("%1$s%n", line));
-        }
-        String result = stringBuilder.toString();
+        String result = TestUtils.returnProcessOutputAsString(process);
         out.println(result);
         assertAll(
                 () -> assertTrue("File should exist", result.contains("DataClassNameConflict.java:8: error: cannot find symbol")),
