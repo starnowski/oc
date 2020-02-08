@@ -79,4 +79,24 @@ public class Chapter1Test {
                 () -> assertTrue("Comment about error should be displayed", result.getOutput().contains("1 error"))
         );
     }
+
+    @Test
+    @DisplayName("the 'PackageDependecieSuccessTest.java' class should be to compile because all imports declaration are correct'")
+    public void testPackageDependecieSuccessTestShouldCompilee() throws IOException, InterruptedException {
+        // given
+        File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
+        assertFalse("The file with extension 'class' for type PackageDependecieSuccessTest should not exists", destDir.toPath().resolve("PackageDependecieSuccessTest.class").toFile().exists());
+
+        // when
+        ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir, "PackageDependecieSuccessTest.java");
+        process.getProcess().waitFor(10, SECONDS);
+
+        // then
+        ProcessDisplayedContent result = returnProcessDisplayedContent(process);
+        out.println(result);
+        assertAll(
+                () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac PackageDependecieSuccessTest.java")),
+                () -> assertTrue("The file with extension 'class' for type PackageDependecieSuccessTest should exists", destDir.toPath().resolve("PackageDependecieSuccessTest.class").toFile().exists())
+        );
+    }
 }
