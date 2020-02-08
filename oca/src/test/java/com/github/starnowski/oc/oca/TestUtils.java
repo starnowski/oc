@@ -3,6 +3,7 @@ package com.github.starnowski.oc.oca;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
+import java.nio.file.Path;
 
 import static java.lang.String.format;
 
@@ -26,5 +27,13 @@ public class TestUtils {
             stringBuilder.append(format("%1$s%n", line));
         }
         return stringBuilder.toString();
+    }
+
+    public static File returnFileForCopiedTestDirectory(Path tempDir, String testDirectoryName) throws IOException {
+        ClassLoader classLoader = TestUtils.class.getClassLoader();
+        File srcDir = new File(classLoader.getResource(testDirectoryName).getFile());
+        File destDir = tempDir.resolve(testDirectoryName).toFile();
+        copyDirectory(srcDir, destDir);
+        return destDir;
     }
 }

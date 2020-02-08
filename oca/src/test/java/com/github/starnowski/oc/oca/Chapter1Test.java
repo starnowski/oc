@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
-import static com.github.starnowski.oc.oca.TestUtils.copyDirectory;
+import static com.github.starnowski.oc.oca.TestUtils.returnFileForCopiedTestDirectory;
 import static java.io.File.separator;
 import static java.lang.System.getenv;
 import static java.lang.System.out;
@@ -25,10 +25,7 @@ public class Chapter1Test {
     @DisplayName("the 'DataClassNameConflict.java' class should not be to compile because the import for 'Date' type is unambiguous")
     public void testShouldGenerateCompilationErrorWhenTheDateTypeReferenceIsUnambiguous() throws IOException, InterruptedException {
         // given
-        ClassLoader classLoader = getClass().getClassLoader();
-        File srcDir = new File(classLoader.getResource("chapter1").getFile());
-        File destDir = tempDir.resolve("chapter1").toFile();
-        copyDirectory(srcDir, destDir);
+        File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
 
         // when
         String javaHome = getenv("JAVA_HOME");
