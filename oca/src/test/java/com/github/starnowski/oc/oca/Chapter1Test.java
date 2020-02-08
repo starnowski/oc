@@ -19,7 +19,6 @@ public class Chapter1Test {
     @TempDir
     Path tempDir;
 
-    // This line should generate complication error.
     @Test
     public void testShouldGenerateCompilationErrorWhenTheDateTypeReferenceIsUnambiguous() throws IOException, InterruptedException {
         // given
@@ -36,7 +35,6 @@ public class Chapter1Test {
         // when
         String javaHome = getenv("JAVA_HOME");
         String javacPath = javaHome + separator + "bin" + separator + "javac";
-//        Runtime.getRuntime().exec("");
         ProcessBuilder builder = new ProcessBuilder( javacPath, "DataClassNameConflict.java");
         builder.directory( destDir.toPath().toFile().getAbsoluteFile() ); // this is where you set the root folder for the executable to run with
         builder.redirectErrorStream(true);
@@ -47,7 +45,7 @@ public class Chapter1Test {
         BufferedReader reader =
                 new BufferedReader(new InputStreamReader(process.getInputStream()));
         StringBuilder stringBuilder = new StringBuilder();
-        String line = null;
+        String line;
         while ( (line = reader.readLine()) != null) {
             stringBuilder.append(String.format("%1$s%n", line));
         }
