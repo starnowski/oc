@@ -1,5 +1,6 @@
 package com.github.starnowski.oc.oca;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -21,6 +22,7 @@ public class Chapter1Test {
     Path tempDir;
 
     @Test
+    @DisplayName("the 'DataClassNameConflict.java' class should not be able to compile because the import for 'Date' type is unambiguous")
     public void testShouldGenerateCompilationErrorWhenTheDateTypeReferenceIsUnambiguous() throws IOException, InterruptedException {
         // given
         ClassLoader classLoader = getClass().getClassLoader();
