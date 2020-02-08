@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 import static com.github.starnowski.oc.oca.TestUtils.returnFileForCopiedTestDirectory;
+import static com.github.starnowski.oc.oca.TestUtils.returnProcessOutputAsString;
 import static java.io.File.separator;
 import static java.lang.System.getenv;
 import static java.lang.System.out;
@@ -37,7 +38,7 @@ public class Chapter1Test {
         process.waitFor(10, SECONDS);
 
         // then
-        String result = TestUtils.returnProcessOutputAsString(process);
+        String result = returnProcessOutputAsString(process);
         out.println(result);
         assertAll(
                 () -> assertTrue("File should exist", result.contains("DataClassNameConflict.java:8: error: cannot find symbol")),
