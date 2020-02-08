@@ -5,7 +5,11 @@ import org.apache.commons.io.FileUtils;
 import java.io.*;
 import java.nio.file.Path;
 
+import static java.io.File.separator;
 import static java.lang.String.format;
+import static java.lang.System.getenv;
+import static java.util.stream.Stream.concat;
+import static java.util.stream.Stream.of;
 
 public class TestUtils {
 
@@ -35,5 +39,14 @@ public class TestUtils {
         File destDir = tempDir.resolve(testDirectoryName).toFile();
         copyDirectory(srcDir, destDir);
         return destDir;
+    }
+
+    public static Process startJavacProcessWithArgumentsFromDirectory(File dir, String... arguments) throws IOException {
+        String javaHome = getenv("JAVA_HOME");
+        String javacPath = javaHome + separator + "bin" + separator + "javac";
+        ProcessBuilder builder = new ProcessBuilder( concat(of(javacPath), of(arguments)).toArray(String[]::new));
+        builder.directory( dir.toPath().toFile().getAbsoluteFile() ); // this is where you set the root folder for the executable to run with
+        builder.redirectErrorStream(true);
+        return builder.start();
     }
 }
