@@ -33,8 +33,8 @@ public class Chapter1Test {
         String result = returnProcessOutputAsString(process);
         out.println(result);
         assertAll(
-                () -> assertTrue("File should exist", result.contains("DataClassNameConflict.java:8: error: cannot find symbol")),
-                () -> assertTrue("File should exist", result.contains("1 error"))
+                () -> assertTrue("Comment about invalid line should be displayed", result.contains("DataClassNameConflict.java:8: error: cannot find symbol")),
+                () -> assertTrue("Comment about error should be displayed", result.contains("1 error"))
         );
     }
 }
