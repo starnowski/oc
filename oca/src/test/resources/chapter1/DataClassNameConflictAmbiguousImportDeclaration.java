@@ -1,6 +1,5 @@
 
 import java.util.Date;
-import java.sql.Date;
 
 //javac DataClassNameConflict.java
 public class DataClassNameConflictAmbiguousImportDeclaration {
