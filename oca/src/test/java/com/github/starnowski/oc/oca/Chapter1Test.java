@@ -21,21 +21,21 @@ public class Chapter1Test {
     Path tempDir;
 
     @Test
-    @DisplayName("the 'DataClassNameConflict.java' class should not be to compile because the import for 'Date' type is unambiguous")
+    @DisplayName("the 'DataClassNameConflictAmbiguousImportDeclaration.java' class should not be to compile because the import for 'Date' type is unambiguous")
     public void testShouldGenerateCompilationErrorWhenTheDateTypeReferenceIsUnambiguous() throws IOException, InterruptedException {
         // given
         File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
 
         // when
-        ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir, "DataClassNameConflict.java");
+        ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir, "DataClassNameConflictAmbiguousImportDeclaration.java");
         process.getProcess().waitFor(10, SECONDS);
 
         // then
         ProcessDisplayedContent result = returnProcessDisplayedContent(process);
         out.println(result);
         assertAll(
-                () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac DataClassNameConflict.java")),
-                () -> assertTrue("Comment about invalid line should be displayed", result.getOutput().contains("DataClassNameConflict.java:3: error: a type with the same simple name is already defined by the single-type-import of Date")),
+                () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac DataClassNameConflictAmbiguousImportDeclaration.java")),
+                () -> assertTrue("Comment about invalid line should be displayed", result.getOutput().contains("DataClassNameConflictAmbiguousImportDeclaration.java:3: error: a type with the same simple name is already defined by the single-type-import of Date")),
                 () -> assertTrue("Comment about error should be displayed", result.getOutput().contains("1 error"))
         );
     }
