@@ -22,7 +22,7 @@ public class Chapter1Test {
 
     @Test
     @DisplayName("the 'DataClassNameConflictAmbiguousImportDeclaration.java' class should not be to compile because the import for 'Date' type is ambiguous")
-    public void testShouldGenerateCompilationErrorWhenTheDateTypeReferenceIsUnambiguous() throws IOException, InterruptedException {
+    public void testShouldGenerateCompilationErrorWhenTheDateTypeImportDeclarationIsAmbiguous() throws IOException, InterruptedException {
         // given
         File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
 
@@ -35,6 +35,26 @@ public class Chapter1Test {
         out.println(result);
         assertAll(
                 () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac DataClassNameConflictAmbiguousImportDeclaration.java")),
+                () -> assertTrue("Comment about invalid line should be displayed", result.getOutput().contains("DataClassNameConflictAmbiguousImportDeclaration.java:3: error: a type with the same simple name is already defined by the single-type-import of Date")),
+                () -> assertTrue("Comment about error should be displayed", result.getOutput().contains("1 error"))
+        );
+    }
+
+    @Test
+    @DisplayName("the 'DataClassNameConflictAmbiguousImportWithWildcardDeclaration.java' class should not be to compile because the import declaration with wildcard for 'Date' type is ambiguous")
+    public void testShouldGenerateCompilationErrorWhenTheDateTypeImportDeclarationWithWildcardIsAmbiguous() throws IOException, InterruptedException {
+        // given
+        File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
+
+        // when
+        ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir, "DataClassNameConflictAmbiguousImportWithWildcardDeclaration.java");
+        process.getProcess().waitFor(10, SECONDS);
+
+        // then
+        ProcessDisplayedContent result = returnProcessDisplayedContent(process);
+        out.println(result);
+        assertAll(
+                () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac DataClassNameConflictAmbiguousImportWithWildcardDeclaration.java")),
                 () -> assertTrue("Comment about invalid line should be displayed", result.getOutput().contains("DataClassNameConflictAmbiguousImportDeclaration.java:3: error: a type with the same simple name is already defined by the single-type-import of Date")),
                 () -> assertTrue("Comment about error should be displayed", result.getOutput().contains("1 error"))
         );
