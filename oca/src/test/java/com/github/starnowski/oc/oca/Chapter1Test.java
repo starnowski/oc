@@ -35,7 +35,7 @@ public class Chapter1Test {
         out.println(result);
         assertAll(
                 () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac DataClassNameConflict.java")),
-                () -> assertTrue("Comment about invalid line should be displayed", result.getOutput().contains("DataClassNameConflict.java:8: error: cannot find symbol")),
+                () -> assertTrue("Comment about invalid line should be displayed", result.getOutput().contains("DataClassNameConflict.java:3: error: a type with the same simple name is already defined by the single-type-import of Date")),
                 () -> assertTrue("Comment about error should be displayed", result.getOutput().contains("1 error"))
         );
     }
