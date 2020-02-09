@@ -1,5 +1,8 @@
-package com.github.starnowski.oc.oca;
+package com.github.starnowski.oc.oca.chapter1;
 
+import com.github.starnowski.oc.oca.AbstractChapterTest;
+import com.github.starnowski.oc.oca.ProcessDisplayedContent;
+import com.github.starnowski.oc.oca.ProcessWrapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +16,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class Chapter1Test extends AbstractChapterTest{
+public class Chapter1Test extends AbstractChapterTest {
 
     @Test
     @DisplayName("the 'DataClassNameConflictAmbiguousImportDeclaration.java' class should not be to compile because the import for 'Date' type is ambiguous")
