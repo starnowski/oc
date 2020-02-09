@@ -21,7 +21,7 @@ public class Chapter1Test {
     Path tempDir;
 
     @Test
-    @DisplayName("the 'DataClassNameConflictAmbiguousImportDeclaration.java' class should not be to compile because the import for 'Date' type is unambiguous")
+    @DisplayName("the 'DataClassNameConflictAmbiguousImportDeclaration.java' class should not be to compile because the import for 'Date' type is ambiguous")
     public void testShouldGenerateCompilationErrorWhenTheDateTypeReferenceIsUnambiguous() throws IOException, InterruptedException {
         // given
         File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
@@ -41,7 +41,7 @@ public class Chapter1Test {
     }
 
     @Test
-    @DisplayName("the 'DataClassNameWithoutConflict.java' class should be to compile because the import for 'Date' type is ambiguous")
+    @DisplayName("the 'DataClassNameWithoutConflict.java' class should be to compile because the import for 'Date' type is unequivocal")
     public void testDataClassNameWithoutConflictTypeShouldBeAbleToCompile() throws IOException, InterruptedException {
         // given
         File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
