@@ -81,6 +81,26 @@ public class Chapter1Test {
     }
 
     @Test
+    @DisplayName("the 'DataClassNameWithoutConflictWithSingleImportDeclarationWildcard.java' class should be to compile because the import for 'Date' type is unequivocal even when there is single import declaration with wildcard")
+    public void testDataClassNameWithoutConflictTypeShouldBeAbleToCompileEvenWithSingleImportDeclarationWithWildcard() throws IOException, InterruptedException {
+        // given
+        File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
+        assertFalse("The file with extension 'class' for type DataClassNameWithoutConflict should not exists", destDir.toPath().resolve("DataClassNameWithoutConflictWithSingleImportDeclarationWildcard.class").toFile().exists());
+
+        // when
+        ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir, "DataClassNameWithoutConflictWithSingleImportDeclarationWildcard.java");
+        process.getProcess().waitFor(10, SECONDS);
+
+        // then
+        ProcessDisplayedContent result = returnProcessDisplayedContent(process);
+        out.println(result);
+        assertAll(
+                () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac DataClassNameWithoutConflictWithSingleImportDeclarationWildcard.java")),
+                () -> assertTrue("The file with extension 'class' for type DataClassNameWithoutConflictWithSingleImportDeclarationWildcard should exists", destDir.toPath().resolve("DataClassNameWithoutConflictWithSingleImportDeclarationWildcard.class").toFile().exists())
+        );
+    }
+
+    @Test
     @DisplayName("the 'PackageDependecieFailedTest.java' class should be to not compile because the 'ProgramBB' type is in subpackage'")
     public void testPackageDependecieFailedTestShouldNotCompileBecauseProgramBBTypeIsInSubPackage() throws IOException, InterruptedException {
         // given
