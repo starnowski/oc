@@ -1,9 +1,9 @@
 
-import java.util.Date;
-import java.sql.Date;
+import java.util.*;
+import java.sql.*;
 
 //javac DataClassNameConflictAmbiguousImportDeclaration.java
-public class DataClassNameConflictAmbiguousImportDeclaration {
+public class DataClassNameConflictAmbiguousImportWithWildcardDeclaration {
 	
 	private Date date; //This line should generate complication error.
 }
