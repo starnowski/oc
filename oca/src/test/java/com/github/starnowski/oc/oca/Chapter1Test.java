@@ -2,11 +2,9 @@ package com.github.starnowski.oc.oca;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 
 import static com.github.starnowski.oc.oca.TestUtils.*;
 import static java.lang.System.out;
@@ -15,16 +13,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class Chapter1Test {
-
-    @TempDir
-    Path tempDir;
+public class Chapter1Test extends AbstractChapterTest{
 
     @Test
     @DisplayName("the 'DataClassNameConflictAmbiguousImportDeclaration.java' class should not be to compile because the import for 'Date' type is ambiguous")
     public void testShouldGenerateCompilationErrorWhenTheDateTypeImportDeclarationIsAmbiguous() throws IOException, InterruptedException {
         // given
-        File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
+        File destDir = returnFileForCopiedTestDirectory();
 
         // when
         ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir, "DataClassNameConflictAmbiguousImportDeclaration.java");
@@ -44,7 +39,7 @@ public class Chapter1Test {
     @DisplayName("the 'DataClassNameConflictAmbiguousImportWithWildcardDeclaration.java' class should not be to compile because the import declaration with wildcard for 'Date' type is ambiguous")
     public void testShouldGenerateCompilationErrorWhenTheDateTypeImportDeclarationWithWildcardIsAmbiguous() throws IOException, InterruptedException {
         // given
-        File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
+        File destDir = returnFileForCopiedTestDirectory();
 
         // when
         ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir, "DataClassNameConflictAmbiguousImportWithWildcardDeclaration.java");
@@ -64,7 +59,7 @@ public class Chapter1Test {
     @DisplayName("the 'DataClassNameWithoutConflict.java' class should be to compile because the import for 'Date' type is unequivocal")
     public void testDataClassNameWithoutConflictTypeShouldBeAbleToCompile() throws IOException, InterruptedException {
         // given
-        File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
+        File destDir = returnFileForCopiedTestDirectory();
         assertFalse("The file with extension 'class' for type DataClassNameWithoutConflict should not exists", destDir.toPath().resolve("DataClassNameWithoutConflict.class").toFile().exists());
 
         // when
@@ -84,7 +79,7 @@ public class Chapter1Test {
     @DisplayName("the 'DataClassNameWithoutConflictWithSingleImportDeclarationWildcard.java' class should be to compile because the import for 'Date' type is unequivocal even when there is single import declaration with wildcard")
     public void testDataClassNameWithoutConflictTypeShouldBeAbleToCompileEvenWithSingleImportDeclarationWithWildcard() throws IOException, InterruptedException {
         // given
-        File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
+        File destDir = returnFileForCopiedTestDirectory();
         assertFalse("The file with extension 'class' for type DataClassNameWithoutConflict should not exists", destDir.toPath().resolve("DataClassNameWithoutConflictWithSingleImportDeclarationWildcard.class").toFile().exists());
 
         // when
@@ -104,7 +99,7 @@ public class Chapter1Test {
     @DisplayName("the 'PackageDependecieFailedTest.java' class should be to not compile because the 'ProgramBB' type is in subpackage'")
     public void testPackageDependecieFailedTestShouldNotCompileBecauseProgramBBTypeIsInSubPackage() throws IOException, InterruptedException {
         // given
-        File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
+        File destDir = returnFileForCopiedTestDirectory();
 
         // when
         ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir, "PackageDependecieFailedTest.java");
@@ -124,7 +119,7 @@ public class Chapter1Test {
     @DisplayName("the 'PackageDependecieSuccessTest.java' class should be to compile because all imports declaration are correct'")
     public void testPackageDependecieSuccessTestShouldCompilee() throws IOException, InterruptedException {
         // given
-        File destDir = returnFileForCopiedTestDirectory(tempDir, "chapter1");
+        File destDir = returnFileForCopiedTestDirectory();
         assertFalse("The file with extension 'class' for type PackageDependecieSuccessTest should not exists", destDir.toPath().resolve("PackageDependecieSuccessTest.class").toFile().exists());
 
         // when
@@ -138,5 +133,10 @@ public class Chapter1Test {
                 () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac PackageDependecieSuccessTest.java")),
                 () -> assertTrue("The file with extension 'class' for type PackageDependecieSuccessTest should exists", destDir.toPath().resolve("PackageDependecieSuccessTest.class").toFile().exists())
         );
+    }
+
+    @Override
+    protected String getChapterDirectoryName() {
+        return "chapter1";
     }
 }
