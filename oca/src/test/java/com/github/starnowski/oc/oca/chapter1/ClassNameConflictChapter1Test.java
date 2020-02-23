@@ -1,6 +1,5 @@
 package com.github.starnowski.oc.oca.chapter1;
 
-import com.github.starnowski.oc.oca.AbstractChapterTest;
 import com.github.starnowski.oc.oca.ProcessDisplayedContent;
 import com.github.starnowski.oc.oca.ProcessWrapper;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +16,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class ClassNameConflictChapter1Test extends AbstractChapterTest {
+public class ClassNameConflictChapter1Test extends AbstractChapter1Test {
 
     @Test
     @DisplayName("the 'DataClassNameConflictAmbiguousImportDeclaration.java' class should not be to compile because the import for 'Date' type is ambiguous")
@@ -97,10 +96,5 @@ public class ClassNameConflictChapter1Test extends AbstractChapterTest {
                 () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac DataClassNameWithoutConflictWithSingleImportDeclarationWildcard.java")),
                 () -> assertTrue("The file with extension 'class' for type DataClassNameWithoutConflictWithSingleImportDeclarationWildcard should exists", destDir.toPath().resolve("DataClassNameWithoutConflictWithSingleImportDeclarationWildcard.class").toFile().exists())
         );
-    }
-
-    @Override
-    protected String getChapterDirectoryName() {
-        return "chapter1";
     }
 }
