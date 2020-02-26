@@ -51,6 +51,16 @@ public class TestUtils {
         return new ProcessWrapper(builder.start(), builder.command());
     }
 
+    public static ProcessWrapper startJavaProcessWithArgumentsFromDirectory(File dir, String... arguments) throws IOException {
+        String javaHome = getenv("JAVA_HOME");
+        String javacPath = javaHome + separator + "bin" + separator + "java";
+        ProcessBuilder builder = new ProcessBuilder( concat(of(javacPath), of(arguments)).toArray(String[]::new));
+        builder.directory( dir.toPath().toFile().getAbsoluteFile() ); // this is where you set the root folder for the executable to run with
+        builder.redirectErrorStream(true);
+        //builder.command();
+        return new ProcessWrapper(builder.start(), builder.command());
+    }
+
     public static ProcessDisplayedContent returnProcessDisplayedContent(ProcessWrapper process) throws IOException {
         return new ProcessDisplayedContent(String.join(" ", process.getCommand()), returnProcessOutputAsString(process.getProcess()));
     }
