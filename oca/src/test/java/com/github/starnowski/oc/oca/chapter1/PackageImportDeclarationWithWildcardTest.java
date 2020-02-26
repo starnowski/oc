@@ -16,7 +16,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class Chapter1Test extends AbstractChapter1Test {
+public class PackageImportDeclarationWithWildcardTest extends AbstractChapter1Test {
 
     @Test
     @DisplayName("the 'PackageDependecieFailedTest.java' class should be to not compile because the 'ProgramBB' type is in subpackage'")
