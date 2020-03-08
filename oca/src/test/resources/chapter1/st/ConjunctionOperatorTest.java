@@ -6,7 +6,7 @@ package st;
  * <br/><b>javac "./st/ConuctionOperatorTest.java"</b>
  * <br/><b>java "st.ConuctionOperatorTest"</b>
  */
-public class ConuctionOperatorTest {
+public class ConjunctionOperatorTest {
 
 	public static void main(String[] args) {
 		if (returnFalse() & returnTrue()) {
