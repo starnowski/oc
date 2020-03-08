@@ -44,7 +44,8 @@ public class Question05AnswerETest extends AbstractChapter1Test {
         assertAll(
                 () -> assertTrue("Command was constructed correctly", javacProcessResult.getCommand().endsWith("javac " + question05AnswerETestPath)),
                 () -> assertTrue("The file with extension 'class' for type Question05AnswerETest should exists", destDir.toPath().resolve("st").resolve("exame").resolve("Question05AnswerETest.class").toFile().exists()),
-                () -> assertTrue("Command was constructed correctly for the java execution", javaProcessResult.getCommand().endsWith("java st.exame.Question05AnswerETest"))
+                () -> assertTrue("Command was constructed correctly for the java execution", javaProcessResult.getCommand().endsWith("java st.exame.Question05AnswerETest")),
+                () -> assertTrue("Program should display 'count:2'", javaProcessResult.getOutput().contains("count:2"))
         );
     }
 
