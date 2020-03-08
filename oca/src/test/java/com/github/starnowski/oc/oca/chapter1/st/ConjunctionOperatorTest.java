@@ -21,12 +21,12 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class ConjunctionOperatorTest extends AbstractChapter1Test {
 
     @Test
-    @DisplayName("the 'ConuctionOperatorTest.java' class should be to compile and display both messages because of single conjunction character")
+    @DisplayName("the 'ConjunctionOperatorTest.java' class should be to compile and display both messages because of single conjunction character")
     public void testQuestion05AnswerETest() throws IOException, InterruptedException {
         // given
         File destDir = returnFileForCopiedTestDirectory();
-        assertFalse("The file with extension 'class' for type ConuctionOperatorTest should not exists", destDir.toPath().resolve("st").resolve("ConuctionOperatorTest.class").toFile().exists());
-        String question05AnswerETestPath = "." + separator + "st" + separator + "ConuctionOperatorTest.java";
+        assertFalse("The file with extension 'class' for type ConjunctionOperatorTest should not exists", destDir.toPath().resolve("st").resolve("ConjunctionOperatorTest.class").toFile().exists());
+        String question05AnswerETestPath = "." + separator + "st" + separator + "ConjunctionOperatorTest.java";
 
         // when
         // javac "./st/exame/Question05AnswerETest.java"
@@ -34,7 +34,7 @@ public class ConjunctionOperatorTest extends AbstractChapter1Test {
         javacProcess.getProcess().waitFor(10, SECONDS);
 
         //java "st.exame.Question05AnswerETest"
-        ProcessWrapper javaProcess =  startJavaProcessWithArgumentsFromDirectory(destDir, "st.ConuctionOperatorTest");
+        ProcessWrapper javaProcess =  startJavaProcessWithArgumentsFromDirectory(destDir, "st.ConjunctionOperatorTest");
         javaProcess.getProcess().waitFor(10, SECONDS);
 
         // then
@@ -44,8 +44,8 @@ public class ConjunctionOperatorTest extends AbstractChapter1Test {
         out.println(javaProcessResult);
         assertAll(
                 () -> assertTrue("Command was constructed correctly", javacProcessResult.getCommand().endsWith("javac " + question05AnswerETestPath)),
-                () -> assertTrue("The file with extension 'class' for type ConuctionOperatorTest should exists", destDir.toPath().resolve("st").resolve("ConuctionOperatorTest.class").toFile().exists()),
-                () -> assertTrue("Command was constructed correctly for the java execution", javaProcessResult.getCommand().endsWith("java st.ConuctionOperatorTest")),
+                () -> assertTrue("The file with extension 'class' for type ConjunctionOperatorTest should exists", destDir.toPath().resolve("st").resolve("ConjunctionOperatorTest.class").toFile().exists()),
+                () -> assertTrue("Command was constructed correctly for the java execution", javaProcessResult.getCommand().endsWith("java st.ConjunctionOperatorTest")),
                 () -> assertTrue("Program should display 'Ivoked returnFalse'", javaProcessResult.getOutput().contains("Ivoked returnFalse")),
                 () -> assertTrue("Program should display 'Ivoked returnTrue'", javaProcessResult.getOutput().contains("Ivoked returnTrue")),
                 () -> assertTrue("Program should display 'Condition is invalid'", javaProcessResult.getOutput().contains("Condition is invalid")),
