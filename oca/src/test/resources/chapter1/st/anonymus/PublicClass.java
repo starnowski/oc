@@ -56,18 +56,18 @@ class OutOfPublicScopePackageClass
 	
 }
 
-/*
+
 //error: modifier protected not allowed here
 protected class OutOfPublicScopeProtectedClass
 {
 	
 }
-*/
 
-/*
+
+
 //error: modifier private not allowed here
 private class OutOfPublicScopePrivateClass
 {
 	
 }
-*/
+
