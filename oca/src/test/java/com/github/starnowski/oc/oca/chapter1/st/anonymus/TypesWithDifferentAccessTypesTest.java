@@ -22,7 +22,7 @@ public class TypesWithDifferentAccessTypesTest extends AbstractChapter1Test {
 
     @Test
     @DisplayName("the 'PublicClass.java' class should not compile, because it contains types with private and protected modifiers")
-    public void testClassFileWithDifferentModifiersShouldCompilee() throws IOException, InterruptedException {
+    public void testClassFileWithDifferentModifiersShouldNotCompile() throws IOException, InterruptedException {
         // given
         File destDir = returnFileForCopiedTestDirectory();
         assertFalse("The file with extension 'class' for type PublicClass should not exists", destDir.toPath().resolve("st").resolve("anonymus").resolve("PublicClass.class").toFile().exists());
@@ -45,7 +45,7 @@ public class TypesWithDifferentAccessTypesTest extends AbstractChapter1Test {
 
     @Test
     @DisplayName("the 'ProtectedClass.java' class should not compile, because it contains types with protected modifier")
-    public void testClassFileWithProtectedModifierShouldCompilee() throws IOException, InterruptedException {
+    public void testClassFileWithProtectedModifierShouldNotCompile() throws IOException, InterruptedException {
         // given
         File destDir = returnFileForCopiedTestDirectory();
         assertFalse("The file with extension 'class' for type PrivateClass should not exists", destDir.toPath().resolve("st").resolve("anonymus").resolve("ProtectedClass.class").toFile().exists());
@@ -67,7 +67,7 @@ public class TypesWithDifferentAccessTypesTest extends AbstractChapter1Test {
 
     @Test
     @DisplayName("the 'PrivateClass.java' class should not compile, because it contains types with private modifier")
-    public void testClassFileWithPrivatedModifierShouldCompilee() throws IOException, InterruptedException {
+    public void testClassFileWithPrivatedModifierShouldNotCompile() throws IOException, InterruptedException {
         // given
         File destDir = returnFileForCopiedTestDirectory();
         assertFalse("The file with extension 'class' for type PrivateClass should not exists", destDir.toPath().resolve("st").resolve("anonymus").resolve("PrivateClass.class").toFile().exists());
