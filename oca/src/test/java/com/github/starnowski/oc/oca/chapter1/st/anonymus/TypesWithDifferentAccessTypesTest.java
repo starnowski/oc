@@ -86,4 +86,25 @@ public class TypesWithDifferentAccessTypesTest extends AbstractChapter1Test {
                 () -> assertTrue("Comment about errors should be displayed", result.getOutput().contains("1 error"))
         );
     }
+
+    @Test
+    @DisplayName("the 'PackageClass.java' class should not compile, because it contains types with private modifier")
+    public void testClassFileWithPackagedModifierShouldCompilee() throws IOException, InterruptedException {
+        // given
+        File destDir = returnFileForCopiedTestDirectory();
+        assertFalse("The file with extension 'class' for type PackageClass should not exists", destDir.toPath().resolve("st").resolve("anonymus").resolve("PackageClass.class").toFile().exists());
+
+        // when
+        String javaPath = "." + separator + "st" + separator + "anonymus" + separator + "PrivateClass.java";
+        ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir.toPath().toFile(), javaPath);
+        process.getProcess().waitFor(10, SECONDS);
+
+        // then
+        ProcessDisplayedContent result = returnProcessDisplayedContent(process);
+        out.println(result);
+        assertAll(
+                () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac " + javaPath)),
+                () -> assertTrue("The file with extension 'class' for type PackageClass should exists", destDir.toPath().resolve("st").resolve("anonymus").resolve("PackageClass.class").toFile().exists())
+        );
+    }
 }
