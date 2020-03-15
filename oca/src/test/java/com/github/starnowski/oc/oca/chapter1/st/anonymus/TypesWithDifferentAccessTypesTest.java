@@ -18,6 +18,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+/*
+ * Oracle documentation related to Class access modifiers.
+ * https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html
+ */
 public class TypesWithDifferentAccessTypesTest extends AbstractChapter1Test {
 
     @Test
