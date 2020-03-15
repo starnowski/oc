@@ -48,7 +48,7 @@ public class TypesWithDifferentAccessTypesTest extends AbstractChapter1Test {
     public void testClassFileWithProtectedModifierShouldCompilee() throws IOException, InterruptedException {
         // given
         File destDir = returnFileForCopiedTestDirectory();
-        assertFalse("The file with extension 'class' for type PublicClass should not exists", destDir.toPath().resolve("st").resolve("anonymus").resolve("ProtectedClass.class").toFile().exists());
+        assertFalse("The file with extension 'class' for type PrivateClass should not exists", destDir.toPath().resolve("st").resolve("anonymus").resolve("ProtectedClass.class").toFile().exists());
 
         // when
         String javaPath = "." + separator + "st" + separator + "anonymus" + separator + "ProtectedClass.java";
@@ -61,6 +61,28 @@ public class TypesWithDifferentAccessTypesTest extends AbstractChapter1Test {
         assertAll(
                 () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac " + javaPath)),
                 () -> assertTrue("Comment about invalid line should be displayed", result.getOutput().contains("ProtectedClass.java:3: error: modifier protected not allowed here")),
+                () -> assertTrue("Comment about errors should be displayed", result.getOutput().contains("1 error"))
+        );
+    }
+
+    @Test
+    @DisplayName("the 'PrivateClass.java' class should not compile, because it contains types with private modifier")
+    public void testClassFileWithPrivatedModifierShouldCompilee() throws IOException, InterruptedException {
+        // given
+        File destDir = returnFileForCopiedTestDirectory();
+        assertFalse("The file with extension 'class' for type PrivateClass should not exists", destDir.toPath().resolve("st").resolve("anonymus").resolve("PrivateClass.class").toFile().exists());
+
+        // when
+        String javaPath = "." + separator + "st" + separator + "anonymus" + separator + "PrivateClass.java";
+        ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir.toPath().toFile(), javaPath);
+        process.getProcess().waitFor(10, SECONDS);
+
+        // then
+        ProcessDisplayedContent result = returnProcessDisplayedContent(process);
+        out.println(result);
+        assertAll(
+                () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac " + javaPath)),
+                () -> assertTrue("Comment about invalid line should be displayed", result.getOutput().contains("PrivateClass.java:3: error: modifier private not allowed here")),
                 () -> assertTrue("Comment about errors should be displayed", result.getOutput().contains("1 error"))
         );
     }
