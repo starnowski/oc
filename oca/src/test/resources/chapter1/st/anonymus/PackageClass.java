@@ -1,6 +1,6 @@
 package st.anonymus;
 
-private class PackageClass
+class PackageClass
 {
 
 }

@@ -95,7 +95,7 @@ public class TypesWithDifferentAccessTypesTest extends AbstractChapter1Test {
         assertFalse("The file with extension 'class' for type PackageClass should not exists", destDir.toPath().resolve("st").resolve("anonymus").resolve("PackageClass.class").toFile().exists());
 
         // when
-        String javaPath = "." + separator + "st" + separator + "anonymus" + separator + "PrivateClass.java";
+        String javaPath = "." + separator + "st" + separator + "anonymus" + separator + "PackageClass.java";
         ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir.toPath().toFile(), javaPath);
         process.getProcess().waitFor(10, SECONDS);
 
