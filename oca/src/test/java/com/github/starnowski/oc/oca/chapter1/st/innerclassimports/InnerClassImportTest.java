@@ -25,19 +25,20 @@ public class InnerClassImportTest extends AbstractChapter1Test {
     public void testNumericTypesShouldCompilee() throws IOException, InterruptedException {
         // given
         File destDir = returnFileForCopiedTestDirectory();
-        assertFalse("The file with extension 'class' for type ClassWithImportInnerClass should not exists", destDir.toPath().resolve("st").resolve("innerclassimports").resolve("InvalidVariableOrderInitializationTest.class").toFile().exists());
+        assertFalse("The file with extension 'class' for type ClassWithImportInnerClass should not exists", destDir.toPath().resolve("st").resolve("innerclassimports").resolve("ClassWithImportInnerClass.class").toFile().exists());
+        assertFalse("The file with extension 'class' for type ClassWithManyInnerClassess should not exists", destDir.toPath().resolve("st").resolve("innerclassimports").resolve("subpackage").resolve("ClassWithManyInnerClassess.class").toFile().exists());
 
         // when
-        String javaPath = "\"." + separator + "st" + separator + "innerclassimports" + separator + "ClassWithImportInnerClass.java\" "
-                + "\"." + separator + "st" + separator + "innerclassimports" + separator + "subpackage" +  separator + "ClassWithManyInnerClassess.java\"";
-        ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir.toPath().toFile(), javaPath);
+        String classWithImportInnerClassPath = "." + separator + "st" + separator + "innerclassimports" + separator + "ClassWithImportInnerClass.java";
+        String classWithManyInnerClassessPath = "." + separator + "st" + separator + "innerclassimports" + separator + "subpackage" +  separator + "ClassWithManyInnerClassess.java";
+        ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir.toPath().toFile(), classWithImportInnerClassPath, classWithManyInnerClassessPath);
         process.getProcess().waitFor(10, SECONDS);
 
         // then
         ProcessDisplayedContent result = returnProcessDisplayedContent(process);
         out.println(result);
         assertAll(
-                () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac " + javaPath)),
+                () -> assertTrue("Command was constructed correctly", result.getCommand().endsWith("javac " + classWithImportInnerClassPath + " " + classWithManyInnerClassessPath)),
                 () -> assertTrue("Comment about invalid line should be displayed", result.getOutput().contains("ClassWithImportInnerClass.java:14: error: package ClassWithManyInnerClassess does not exist")),
                 () -> assertTrue("Comment about error should be displayed", result.getOutput().contains("1 error"))
         );
