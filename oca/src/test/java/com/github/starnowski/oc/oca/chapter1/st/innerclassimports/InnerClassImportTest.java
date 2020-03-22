@@ -22,18 +22,20 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class InnerClassImportTest extends AbstractChapter1Test {
 
     @Test
-    @DisplayName("the 'ClassWithImportInnerClass.java' class should not compile because it does not contains correct import declaration")
-    public void testNumericTypesShouldCompilee() throws IOException, InterruptedException {
+    @DisplayName("the 'ClassWithImportInnerClass.java' class should not compile because it does not contains correct import declaration for class ClassWithManyInnerClassess, it contains import declaration for ClassWithManyInnerClassess's inner class")
+    public void testClassWithInvalidImportDeclaration() throws IOException, InterruptedException {
         // given
         File destDir = returnFileForCopiedTestDirectory();
         String classWithImportInnerClassPath = "." + separator + "st" + separator + "innerclassimports" + separator + "ClassWithImportInnerClass.java";
         String classWithManyInnerClassessPath = "." + separator + "st" + separator + "innerclassimports" + separator + "subpackage" +  separator + "ClassWithManyInnerClassess.java";
-        assertFalse("The file with extension 'class' for type ClassWithImportInnerClass should not exists", destDir.toPath().resolve("st").resolve("innerclassimports").resolve("ClassWithImportInnerClass.class").toFile().exists());
-        assertFalse("The file with extension 'class' for type ClassWithManyInnerClassess should not exists", destDir.toPath().resolve("st").resolve("innerclassimports").resolve("subpackage").resolve("ClassWithManyInnerClassess.class").toFile().exists());
-        assertTrue("Type ClassWithImportInnerClass contains import declaration for inner class InnerClass", TestUtils.readFileContent(destDir, classWithImportInnerClassPath).contains("import st.innerclassimports.subpackage.ClassWithManyInnerClassess.InnerClass;"));
-        assertFalse("Type ClassWithImportInnerClass does not contain import declaration for ClassWithManyInnerClassess class", TestUtils.readFileContent(destDir, classWithImportInnerClassPath).contains("import st.innerclassimports.subpackage.ClassWithManyInnerClassess;"));
-        assertFalse("Type ClassWithImportInnerClass does not contain import declaration for subpackage package", TestUtils.readFileContent(destDir, classWithImportInnerClassPath).contains("import st.innerclassimports.subpackage.*;"));
-        assertTrue("Type ClassWithManyInnerClassess contains InnerClass inner class", TestUtils.readFileContent(destDir, classWithManyInnerClassessPath).contains("public class InnerClass {}"));
+        assertAll(
+                () -> assertFalse("The file with extension 'class' for type ClassWithImportInnerClass should not exists", destDir.toPath().resolve("st").resolve("innerclassimports").resolve("ClassWithImportInnerClass.class").toFile().exists()),
+                () -> assertFalse("The file with extension 'class' for type ClassWithManyInnerClassess should not exists", destDir.toPath().resolve("st").resolve("innerclassimports").resolve("subpackage").resolve("ClassWithManyInnerClassess.class").toFile().exists()),
+                () -> assertTrue("Type ClassWithImportInnerClass contains import declaration for inner class InnerClass", TestUtils.readFileContent(destDir, classWithImportInnerClassPath).contains("import st.innerclassimports.subpackage.ClassWithManyInnerClassess.InnerClass;")),
+                () -> assertFalse("Type ClassWithImportInnerClass does not contain import declaration for ClassWithManyInnerClassess class", TestUtils.readFileContent(destDir, classWithImportInnerClassPath).contains("import st.innerclassimports.subpackage.ClassWithManyInnerClassess;")),
+                () -> assertFalse("Type ClassWithImportInnerClass does not contain import declaration for subpackage package", TestUtils.readFileContent(destDir, classWithImportInnerClassPath).contains("import st.innerclassimports.subpackage.*;")),
+                () -> assertTrue("Type ClassWithManyInnerClassess contains InnerClass inner class", TestUtils.readFileContent(destDir, classWithManyInnerClassessPath).contains("public class InnerClass {}"))
+        );
 
         // when
         ProcessWrapper process =  startJavacProcessWithArgumentsFromDirectory(destDir.toPath().toFile(), classWithImportInnerClassPath, classWithManyInnerClassessPath);
