@@ -5,7 +5,6 @@ import org.apache.commons.io.FileUtils;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import static java.io.File.separator;
 import static java.lang.String.format;
@@ -68,7 +67,6 @@ public class TestUtils {
     }
 
     public static String readFileContent(File dir, String filePath) throws IOException {
-        //TODO
-        return new String(Files.readAllBytes(Paths.get("duke.java")));
+        return new String(Files.readAllBytes(dir.toPath().resolve(filePath)));
     }
 }
