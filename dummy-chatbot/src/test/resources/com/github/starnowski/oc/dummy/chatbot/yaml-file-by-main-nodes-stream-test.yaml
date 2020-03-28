@@ -9,7 +9,20 @@ greeting:
   - good afternoon
   - howdy
 conversation-continue:
-
+  - ok
+  - wow great
+  - oh is it ?
+  - oh
+  - ohh
+  - Thats great
+  - Good
+  - Really
+  - hmm
+  - lemme
+  - think
+  - hm
+  - hmmm
+  - hmmmmm
 price-inquiry:
 
 product-inquiry:
