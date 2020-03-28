@@ -113,12 +113,7 @@ public class OpenNLPChatBot {
     private static DoccatModel trainCategorizerModel() throws FileNotFoundException, IOException {
         // faq-categorizer.txt is a custom training data with categories as per our chat
         // requirements.
-        ObjectStream<String> lineStream = new PlainTextByLineStream(new InputStreamFactory() {
-            @Override
-            public InputStream createInputStream() throws IOException {
-                return this.getClass().getResourceAsStream("faq-categorizer.txt");
-            }
-        }, StandardCharsets.UTF_8);
+        ObjectStream<String> lineStream = new PlainTextByLineStream(createInputStreamFactory("faq-categorizer.txt"), StandardCharsets.UTF_8);
         ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
 
         DoccatFactory factory = new DoccatFactory(new FeatureGenerator[] { new BagOfWordsFeatureGenerator() });
@@ -240,7 +235,7 @@ public class OpenNLPChatBot {
             throws InvalidFormatException, IOException {
         // Better to read file once at start of program & store model in instance
         // variable. but keeping here for simplicity in understanding.
-        try (InputStream modelIn = new FileInputStream("en-lemmatizer.bin")) {
+        try (InputStream modelIn = createInputStreamFactory("en-lemmatizer.bin").createInputStream()) {
 
             // Tag sentence.
             LemmatizerME myCategorizer = new LemmatizerME(new LemmatizerModel(modelIn));
@@ -251,5 +246,16 @@ public class OpenNLPChatBot {
 
         }
     }
+
+    private static InputStreamFactory createInputStreamFactory(String resource)
+    {
+        return new InputStreamFactory() {
+            @Override
+            public InputStream createInputStream() throws IOException {
+                return this.getClass().getResourceAsStream(resource);
+            }
+        };
+    }
+
 
 }
