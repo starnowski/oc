@@ -12,7 +12,10 @@ import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.*;
 import opennlp.tools.util.model.ModelUtil;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -110,8 +113,12 @@ public class OpenNLPChatBot {
     private static DoccatModel trainCategorizerModel() throws FileNotFoundException, IOException {
         // faq-categorizer.txt is a custom training data with categories as per our chat
         // requirements.
-        InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File("faq-categorizer.txt"));
-        ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, StandardCharsets.UTF_8);
+        ObjectStream<String> lineStream = new PlainTextByLineStream(new InputStreamFactory() {
+            @Override
+            public InputStream createInputStream() throws IOException {
+                return this.getClass().getResourceAsStream("faq-categorizer.txt");
+            }
+        }, StandardCharsets.UTF_8);
         ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
 
         DoccatFactory factory = new DoccatFactory(new FeatureGenerator[] { new BagOfWordsFeatureGenerator() });
