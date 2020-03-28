@@ -44,7 +44,7 @@ public class OpenNLPChatBot {
         questionAnswer.put("price-inquiry", "Price is $300");
         questionAnswer.put("conversation-continue", "What else can I help you with?");
         questionAnswer.put("conversation-complete", "Nice chatting with you. Bbye.");
-
+        questionAnswer.put("conversation-negation", "Okay, I'll try harder to help you. What do you need?");
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException {
