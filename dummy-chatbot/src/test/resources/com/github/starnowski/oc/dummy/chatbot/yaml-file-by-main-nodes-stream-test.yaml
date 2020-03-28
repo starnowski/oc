@@ -24,7 +24,16 @@ conversation-continue:
   - hmmm
   - hmmmmm
 price-inquiry:
-
+  - How much is the cost ?
+  - What's the price ?
+  - What's the cost ?
+  - How much is price?
+  - How much it costs ?
+  - price
+  - cost
+  - money
+  - how much.
+  - how much?
 product-inquiry:
 
 conversation-complete:
