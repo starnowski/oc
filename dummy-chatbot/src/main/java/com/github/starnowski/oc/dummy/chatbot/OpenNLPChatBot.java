@@ -12,7 +12,6 @@ import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.*;
 import opennlp.tools.util.model.ModelUtil;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -159,7 +158,7 @@ public class OpenNLPChatBot {
     private static String[] breakSentences(String data) throws FileNotFoundException, IOException {
         // Better to read file once at start of program & store model in instance
         // variable. but keeping here for simplicity in understanding.
-        try (InputStream modelIn = new FileInputStream("en-sent.bin")) {
+        try (InputStream modelIn = createInputStreamFactory("en-sent.bin").createInputStream()) {
 
             SentenceDetectorME myCategorizer = new SentenceDetectorME(new SentenceModel(modelIn));
 
@@ -182,7 +181,7 @@ public class OpenNLPChatBot {
     private static String[] tokenizeSentence(String sentence) throws FileNotFoundException, IOException {
         // Better to read file once at start of program & store model in instance
         // variable. but keeping here for simplicity in understanding.
-        try (InputStream modelIn = new FileInputStream("en-token.bin")) {
+        try (InputStream modelIn = createInputStreamFactory("en-token.bin").createInputStream()) {
 
             // Initialize tokenizer tool
             TokenizerME myCategorizer = new TokenizerME(new TokenizerModel(modelIn));
@@ -207,7 +206,7 @@ public class OpenNLPChatBot {
     private static String[] detectPOSTags(String[] tokens) throws IOException {
         // Better to read file once at start of program & store model in instance
         // variable. but keeping here for simplicity in understanding.
-        try (InputStream modelIn = new FileInputStream("en-pos-maxent.bin")) {
+        try (InputStream modelIn = createInputStreamFactory("en-pos-maxent.bin").createInputStream()) {
 
             // Initialize POS tagger tool
             POSTaggerME myCategorizer = new POSTaggerME(new POSModel(modelIn));
@@ -252,7 +251,8 @@ public class OpenNLPChatBot {
         return new InputStreamFactory() {
             @Override
             public InputStream createInputStream() throws IOException {
-                return this.getClass().getResourceAsStream(resource);
+                OpenNLPChatBot bot = new OpenNLPChatBot();
+                return bot.getClass().getResourceAsStream(resource);
             }
         };
     }
