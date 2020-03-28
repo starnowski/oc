@@ -12,6 +12,4 @@
         <module>oca</module>
         <module>dummy-chatbot</module>
     </modules>
-
-
 </project>
