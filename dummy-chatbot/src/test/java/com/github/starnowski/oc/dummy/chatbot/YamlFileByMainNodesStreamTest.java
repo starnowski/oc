@@ -47,8 +47,6 @@ class YamlFileByMainNodesStreamTest {
         Assertions.assertIterableEquals(expectedDocumentSamplesList, prepareDocumentSamplesList());
     }
 
-    //yaml-file-by-main-nodes-stream-test.txt
-
     private InputStreamFactory createInputStreamFactory(String resource)
     {
         return new InputStreamFactory() {
