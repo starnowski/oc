@@ -72,7 +72,7 @@ class YamlFileByMainNodesStreamTest {
     {
         return new InputStreamFactory() {
             @Override
-            public InputStream createInputStream() throws IOException {
+            public InputStream createInputStream() {
                 return this.getClass().getResourceAsStream(resource);
             }
         };
