@@ -2,15 +2,20 @@ package com.github.starnowski.oc.dummy.chatbot;
 
 import opennlp.tools.util.InputStreamFactory;
 import opennlp.tools.util.ObjectStream;
+import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.util.Objects;
+import java.util.*;
+
+import static java.util.stream.Collectors.toCollection;
 
 public class YamlFileByMainNodesStream implements ObjectStream<String> {
 
     private final Charset encoding;
     private InputStreamFactory inputStreamFactory;
+    private Queue<String> categoryEntries;
 
     public YamlFileByMainNodesStream(InputStreamFactory inputStreamFactory, Charset charset) throws IOException {
         this.inputStreamFactory = (InputStreamFactory) Objects.requireNonNull(inputStreamFactory, "inputStreamFactory must not be null!");
@@ -20,6 +25,33 @@ public class YamlFileByMainNodesStream implements ObjectStream<String> {
 
     @Override
     public String read() throws IOException {
-        return null;
+        return categoryEntries.poll();
+    }
+
+    @Override
+    public void reset() throws IOException {
+        Yaml yaml = new Yaml();
+        categoryEntries = new LinkedList<>();
+        try (InputStream in = inputStreamFactory.createInputStream())
+        {
+            Iterable<Object> itr = yaml.loadAll(in);
+            for (Object o : itr) {
+                Map<String, List<String>> map = (Map<String, List<String>>) o;
+                categoryEntries = map.entrySet().stream().map(en -> {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(en.getKey());
+                    sb.append("\t");
+                    en.getValue().forEach(phrase -> {
+                        sb.append(phrase.trim());
+                    });
+                    return sb.toString();
+                }).collect(toCollection(LinkedList::new));
+            }
+        }
+    }
+
+    @Override
+    public void close() throws IOException {
+        // do nothing
     }
 }

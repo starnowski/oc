@@ -52,7 +52,7 @@ class YamlFileByMainNodesStreamTest {
     @DisplayName("Should return data as same way as the PlainTextByLineStream even if data are store in YAML format file")
     public void shouldReturnDataAsSameWayAsPlainTextByLineStreamType() throws IOException {
         // given
-        ObjectStream<String> lineStream = new YamlFileByMainNodesStream(createInputStreamFactory("yaml-file-by-main-nodes-stream-test.txt"), StandardCharsets.UTF_8);
+        ObjectStream<String> lineStream = new YamlFileByMainNodesStream(createInputStreamFactory("yaml-file-by-main-nodes-stream-test.yaml"), StandardCharsets.UTF_8);
         ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
         List<DocumentSample> expectedDocumentSamplesList = new ArrayList<>();
 
