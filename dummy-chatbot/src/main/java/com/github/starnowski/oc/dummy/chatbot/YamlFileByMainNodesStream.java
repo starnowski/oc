@@ -7,9 +7,13 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toCollection;
 
 public class YamlFileByMainNodesStream implements ObjectStream<String> {
@@ -19,13 +23,13 @@ public class YamlFileByMainNodesStream implements ObjectStream<String> {
     private Queue<String> categoryEntries;
 
     public YamlFileByMainNodesStream(InputStreamFactory inputStreamFactory, Charset charset) throws IOException {
-        this.inputStreamFactory = (InputStreamFactory) Objects.requireNonNull(inputStreamFactory, "inputStreamFactory must not be null!");
+        this.inputStreamFactory = requireNonNull(inputStreamFactory, "inputStreamFactory must not be null!");
         this.encoding = charset;
         this.reset();
     }
 
     @Override
-    public String read() throws IOException {
+    public String read() {
         return categoryEntries.poll();
     }
 
@@ -42,7 +46,7 @@ public class YamlFileByMainNodesStream implements ObjectStream<String> {
                     StringBuilder sb = new StringBuilder();
                     sb.append(en.getKey());
                     sb.append("\t");
-                    sb.append(en.getValue().stream().map(s -> s.trim()).collect(Collectors.joining(" ")));
+                    sb.append(en.getValue().stream().map(String::trim).collect(Collectors.joining(" ")));
                     return sb.toString();
                 }).collect(toCollection(LinkedList::new));
             }
@@ -50,7 +54,7 @@ public class YamlFileByMainNodesStream implements ObjectStream<String> {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         // do nothing
     }
 }
