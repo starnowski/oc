@@ -5,7 +5,6 @@ import opennlp.tools.doccat.DocumentSampleStream;
 import opennlp.tools.util.InputStreamFactory;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 class YamlFileByMainNodesStreamTest {
 
@@ -44,7 +45,26 @@ class YamlFileByMainNodesStreamTest {
         }
 
         // then
-        Assertions.assertIterableEquals(expectedDocumentSamplesList, prepareDocumentSamplesList());
+        assertIterableEquals(expectedDocumentSamplesList, prepareDocumentSamplesList());
+    }
+
+    @Test
+    @DisplayName("Should return data as same way as the PlainTextByLineStream even if data are store in YAML format file")
+    public void shouldReturnDataAsSameWayAsPlainTextByLineStreamType() throws IOException {
+        // given
+        ObjectStream<String> lineStream = new YamlFileByMainNodesStream(createInputStreamFactory("yaml-file-by-main-nodes-stream-test.txt"), StandardCharsets.UTF_8);
+        ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
+        List<DocumentSample> expectedDocumentSamplesList = new ArrayList<>();
+
+        // when
+        DocumentSample currentDocumentSample = sampleStream.read();
+        while (currentDocumentSample != null) {
+            expectedDocumentSamplesList.add(currentDocumentSample);
+            currentDocumentSample = sampleStream.read();
+        }
+
+        // then
+        assertIterableEquals(expectedDocumentSamplesList, prepareDocumentSamplesList());
     }
 
     private InputStreamFactory createInputStreamFactory(String resource)
