@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toCollection;
 
@@ -41,9 +42,7 @@ public class YamlFileByMainNodesStream implements ObjectStream<String> {
                     StringBuilder sb = new StringBuilder();
                     sb.append(en.getKey());
                     sb.append("\t");
-                    en.getValue().forEach(phrase -> {
-                        sb.append(phrase.trim());
-                    });
+                    sb.append(en.getValue().stream().map(s -> s.trim()).collect(Collectors.joining(" ")));
                     return sb.toString();
                 }).collect(toCollection(LinkedList::new));
             }
