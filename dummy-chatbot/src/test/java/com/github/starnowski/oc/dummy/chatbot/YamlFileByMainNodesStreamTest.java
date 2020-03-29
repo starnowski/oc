@@ -54,17 +54,18 @@ class YamlFileByMainNodesStreamTest {
         // given
         ObjectStream<String> lineStream = new YamlFileByMainNodesStream(createInputStreamFactory("yaml-file-by-main-nodes-stream-test.yaml"), StandardCharsets.UTF_8);
         ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
-        List<DocumentSample> expectedDocumentSamplesList = new ArrayList<>();
+        List<DocumentSample> results = new ArrayList<>();
+        List<DocumentSample> expectedDocumentSamplesList = prepareDocumentSamplesList();
 
         // when
         DocumentSample currentDocumentSample = sampleStream.read();
         while (currentDocumentSample != null) {
-            expectedDocumentSamplesList.add(currentDocumentSample);
+            results.add(currentDocumentSample);
             currentDocumentSample = sampleStream.read();
         }
 
         // then
-        assertIterableEquals(expectedDocumentSamplesList, prepareDocumentSamplesList());
+        assertIterableEquals(expectedDocumentSamplesList, results);
     }
 
     private InputStreamFactory createInputStreamFactory(String resource)
