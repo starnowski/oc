@@ -14,8 +14,8 @@ public class MainWithMBeanServer {
             throws Exception {
 
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-        ObjectName name = new ObjectName("com.example:type=Hello");
-        Hello mbean = new Hello();
+        ObjectName name = new ObjectName("com.github.starnowski.oc.gc.demo:type=CircleReferenceManager");
+        CircleReferenceManager mbean = new CircleReferenceManager();
         mbs.registerMBean(mbean, name);
 
         //
