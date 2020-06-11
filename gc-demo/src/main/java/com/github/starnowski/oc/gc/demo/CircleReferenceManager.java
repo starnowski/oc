@@ -1,6 +1,6 @@
 package com.github.starnowski.oc.gc.demo;
 
-public class CircleReferenceManager {
+public class CircleReferenceManager implements CircleReferenceManagerMBean {
 
     private CircleReferenceStorage circleReferenceStorage;
 
@@ -8,7 +8,7 @@ public class CircleReferenceManager {
         circleReferenceStorage = new CircleReferenceStorage();
     }
 
-    public void setReferenceForCircleReferenceStorageAsNull() {
+    public void makeNullReferenceForCircleReferenceStorage() {
         circleReferenceStorage = null;
     }
 }
