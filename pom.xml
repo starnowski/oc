@@ -11,5 +11,6 @@
     <modules>
         <module>oca</module>
         <module>dummy-chatbot</module>
+        <module>gc-demo</module>
     </modules>
 </project>
